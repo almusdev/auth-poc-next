@@ -5,7 +5,7 @@ export default async function Page() {
   const session = await getSession();
   return (
     <section>
-      <form
+     {!session && <form
         action={async (formData) => {
           "use server";
           await login(formData);
@@ -15,7 +15,8 @@ export default async function Page() {
         <input type="email" placeholder="Email" />
         <br />
         <button type="submit">Login</button>
-      </form>
+      </form>}
+      { session && 
       <form
         action={async () => {
           "use server";
@@ -24,8 +25,8 @@ export default async function Page() {
         }}
       >
         <button type="submit">Logout</button>
-      </form>
-      <pre>{JSON.stringify(session, null, 2)}</pre>
+      </form>}
+      { session && <pre>{JSON.stringify(session, null, 2)}</pre>}
     </section>
   );
 }
